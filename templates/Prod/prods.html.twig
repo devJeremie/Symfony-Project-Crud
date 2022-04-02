@@ -1,0 +1,55 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}New Title{% endblock %}
+{% block body %}
+    {% include 'commons/_header.html.twig' %}
+<main>
+    <h1>Produits</h1>
+    {{ dump(prodsActive) }}
+    {{ dump(prodsUnactived) }}
+    <section>
+        <h2>Produits "Active"</h2>
+            {% for prod in prodsActive %}
+                <article>
+                    <h3>
+                        {{ prod.Name }}
+                    </h3>
+                    <img src="uploaddirectory/{{ prod.img }}">
+                    <p>
+                        {{ prod.Description }}
+                    </p>
+                    <span>
+                        Le prix de ce produit est : {{ prod.Price }}
+                    </span>
+                    <span>
+                        Le stock de ce produit est : {{ prod.Stock }}
+                    </span>
+                    <a href="{{ path("changeActivProd", {"id":prod.id}) }}">Desactiver</a><!--Donne le chemin de la fonction-->
+                    <a href="{{ path("showProduct", {"id":prod.id}) }}">Voir Plus</a>
+                    <a href="{{ path('updateProd', {'id':prod.id}) }}">Modifier</a>
+                </article>
+            {% endfor %}
+    </section>
+    <section>
+        <h2>Produits "unactive"</h2>
+        {% for prod in prodsUnactived %}
+            <article>
+                <h3>
+                    {{ prod.Name }}
+                </h3>
+                <p>
+                    {{ prod.Description }}
+                </p>
+                <span>
+                        Le prix de ce produit est : {{ prod.Price }}
+                </span>
+                <span>
+                        Le stock de ce produit est : {{ prod.Stock }}
+                </span>
+                <a href="{{ path("changeActivProd", {"id":prod.id}) }}">Activer</a>
+                <a href="{{ path("deleteUnactivedProd", {"id":prod.id}) }}">Supprimer</a>
+            </article>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
